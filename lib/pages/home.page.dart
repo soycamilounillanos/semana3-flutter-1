@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:semana3noticias/models/articulo.model.dart';
+import 'package:semana3noticias/providers/articulo.provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -8,6 +10,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ArticuloProvider articuloProvider = ArticuloProvider();
+
+  Future<List<Articulo>> articulos = Future.value([]);
+
+  @override
+  void initState() {
+    articulos = articuloProvider.getArticulos();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +31,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   _body() {
-    return Text("cuerpo");
+    return FutureBuilder(
+        future: articulos,
+        builder: (BuildContext buildContext, AsyncSnapshot asyncSnapshot) {
+          if (asyncSnapshot.hasData) {
+            List<Widget> list = [];
+            asyncSnapshot.data.forEach((item) => {
+              list.add(Text(item.author))
+            });
+            return ListView(children: list);
+          }
+          return Text("Buscando");
+        });
   }
 }
