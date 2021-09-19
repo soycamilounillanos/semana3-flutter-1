@@ -5,7 +5,7 @@ class Articulo {
   String description;
   String url;
   String urlToImage;
-  String publishedAt;
+  DateTime publishedAt;
   String content;
   Articulo({
     required this.source,
@@ -25,7 +25,7 @@ class Articulo {
         description: json["description"] ?? "",
         url: json["url"] ?? "",
         urlToImage: json["urlToImage"] ?? "",
-        publishedAt: json["publishedAt"] ?? "",
+        publishedAt: DateTime.parse(json["publishedAt"]),
         content: json["content"] ?? "",
       );
 }

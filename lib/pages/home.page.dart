@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:semana3noticias/models/articulo.model.dart';
 import 'package:semana3noticias/providers/articulo.provider.dart';
+import 'package:semana3noticias/widgets/card.widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -35,9 +36,9 @@ class _HomePageState extends State<HomePage> {
         future: articulos,
         builder: (BuildContext buildContext, AsyncSnapshot asyncSnapshot) {
           if (asyncSnapshot.hasData) {
-            List<Widget> list = [];
+            List<CardWidget> list = [];
             asyncSnapshot.data.forEach((item) => {
-              list.add(Text(item.author))
+              list.add(CardWidget(articulo: item))
             });
             return ListView(children: list);
           }
